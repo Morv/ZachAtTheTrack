@@ -63,6 +63,7 @@ main () {
 					pause;
 				} else {
 					printf("Horse %i won the race you lost %.2lf dollars.\n", winner, bet);
+					printf("You now have $%.2lf in the bank.\n\n", account);
 					pause;
 				} //end if-else statement
 
