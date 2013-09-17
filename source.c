@@ -73,15 +73,15 @@ main () {
 			case 3:  // Account Options
 				accountOptions(&account);
 				break;
-		}
-	} while (userChoice != 4);
+		}//end switch statement
+	} while (userChoice != 4); // end do-while loop
 }//end of main
 int getUserChoice(){
 	int userChoice = 0;
 	drawMenu();
 	scanf_s("%i", &userChoice);
 	flush;
-	userChoice = verifyChoice(userChoice, 4);
+	userChoice = verifyChoice(userChoice, 4);//verifies choice between 1 and 4
 
 	cls;
 	return userChoice;
@@ -113,12 +113,12 @@ int getHorse()
 
 	horseMenu();
 		scanf_s("%i", &userChoice);
-	userChoice = verifyChoice(userChoice, SIZE);
+	userChoice = verifyChoice(userChoice, SIZE);//verifies input between 1 and SIZE (number of horses)
 	
 	flush;
 	cls;
 	return userChoice;
-}
+}//end of getHorse
 void horseMenu()
 {
 	cls;
@@ -138,7 +138,7 @@ void horseMenu()
 	printf("  9    3-1    14%%\n");
 	printf("~~~~~~~~~~~~~~~~~~\n\n");
 	printf("Enter your choice (1-9):");
-}
+}//end of horse menu
 void accountOptions(double* account)
 {
 	int acctChoice = 0;
@@ -149,7 +149,7 @@ void accountOptions(double* account)
 			scanf_s("%i", &acctChoice);
 			flush;
 
-		acctChoice = verifyChoice(acctChoice, 3);		
+		acctChoice = verifyChoice(acctChoice, 3);//verifies chio		
 		
 		cls;
 		printf("Current Balance: %.2lf\n", *account); 
@@ -206,18 +206,18 @@ double placeBet(double* account)
 		{
 			printf("\nBet cannot exceed $%.2lf.\n Place your bet: $", *account);
 			scanf_s("%lf", &bet);
-		}
+		} //end while loop
 		if (bet == 0)
 		{
 			printf("\nYou did not place a bet.  ");
 			pause;
 			return 0;
-		}
+		}//end if statement
 
 		*account = (*account - bet);
 
 	return bet;
-}
+}//end placeBet
 int eligibility(int horse, double acct)
 {
 	if (horse == 0 || acct == 0)
@@ -225,16 +225,16 @@ int eligibility(int horse, double acct)
 		if (horse == 0)
 		{
 			printf("You much choose a horse.\n");
-		}
+		}//end 1st sub if
 		if(acct == 0)
 		{
 			printf("You must add money to your account.\n");
-		}
+		} //end 2nd sub if
 		pause;
 		return 0;
-	}
+	} //end big if
 	return 1;
-}
+}//end eligibility to race
 int randomNum()//generates the random number
 {   
 	int i=0, number=0;
@@ -245,10 +245,11 @@ int randomNum()//generates the random number
 	number = 1 + rand() % 100;
 		
 	return number;
-}
+}//end random number
 int horseWin(int randomNum)//matches the random number with the corresponding horse
 {	
 	int winningHorse = 0, number = randomNum;
+
 	if (number <= 35)//35%
 	{
 		winningHorse = 1;//horse 1
@@ -286,7 +287,7 @@ int horseWin(int randomNum)//matches the random number with the corresponding ho
 		winningHorse = 9;//horse 9
 	}
 	return winningHorse;
-}
+}//end winningHorse
 double payout (int winner, double bet)
 {
 	double result = bet;
@@ -302,7 +303,7 @@ double payout (int winner, double bet)
 	if (winner == 9) { result = (result*3);  }
 
 	return result;
-}
+}//end payout
 void results (int winner, int standings[])
 {
 	int i=0;
@@ -319,8 +320,9 @@ void results (int winner, int standings[])
 		for (i; i<SIZE ;i++)
 		{
 			printf("Horse %i\t\t %i\n", i+1, standings[i]);
-		}
+		}//end for loop (display horses and wins)
 		printf("~~~~~~~~~~~~~~~~~~~~~~~\n\n");
 		pause;
+
 	return;
-}
+}//end results
