@@ -298,15 +298,18 @@ double payout (int winner, double bet)
 	double result = bet;
 
 	if (winner == 1) { result = (result*2);  }
-	if (winner == 2) { result = (result*5);  }
-	if (winner == 3) { result = (result*10); }
-	if (winner == 4) { result = (result*15); }
-	if (winner == 5) { result = (result*50); }
-	if (winner == 6) { result = (result*20); }
-	if (winner == 7) { result = (result*10); }
-	if (winner == 8) { result = (result*5);  }
-	if (winner == 9) { result = (result*3);  }
-
+	else if (winner == 2) { result = (result*5);  }
+	else if (winner == 3) { result = (result*10); }
+	else if (winner == 4) { result = (result*15); }
+	else if (winner == 5) { result = (result*50); }
+	else if (winner == 6) { result = (result*20); }
+	else if (winner == 7) { result = (result*10); }
+	else if (winner == 8) { result = (result*5);  }
+	else if (winner == 9) { result = (result*3);  }
+	else { //just in case
+		printf("Calculation Error\n");
+		result = 0;
+	}
 	return result;
 }//end payout
 void results (int winner, int standings[])
