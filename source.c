@@ -60,6 +60,7 @@ main () {
 				{
 					account = (account + payout(winner, bet));
 					printf("Congratulations your horse, Horse %i won...you have just won $%.2lf dollars.\n", winner, payout(winner, bet));
+					printf("You now have $%.2lf in the bank.\n\n", account);
 					pause;
 				} else {
 					printf("Horse %i won the race you lost %.2lf dollars.\n", winner, bet);
