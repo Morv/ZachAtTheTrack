@@ -243,31 +243,31 @@ int horseWin(int randomNum)//matches the random number with the corresponding ho
 	{
 		winningHorse = 1;//horse 1
 	}
-	else if (number >= 36 & number <= 47)//12%
+	else if ((number >= 36) & (number <= 47))//12%
 	{
 		winningHorse = 2;//horse 2
 	}
-	else if (number >= 48 & number <= 55)//8%
+	else if ((number >= 48) & (number <= 55))//8%
 	{
 		winningHorse = 3;//horse 3
 	}
-	else if (number >= 56 & number <= 61)//6%
+	else if ((number >= 56) & (number <= 61))//6%
 	{
 		winningHorse = 4;//horse 4
 	}
-	else if (number == 62)//1%
+	else if ((number == 62))//1%
 	{
 		winningHorse = 5;//horse 5
 	}
-	else if (number >= 63 & number <= 66)//4%
+	else if ((number >= 63) & (number <= 66))//4%
 	{
 		winningHorse = 6;//horse 6
 	}
-	else if (number >= 67 & number <= 74)//8%
+	else if ((number >= 67) & (number <= 74))//8%
 	{
 		winningHorse = 7;//horse 7
 	}
-	else if (number >= 75 & number <= 86)//12%
+	else if ((number >= 75) & (number <= 86))//12%
 	{
 		winningHorse = 8;//horse 8
 	}
