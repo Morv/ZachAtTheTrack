@@ -280,15 +280,15 @@ int payout (int winner, int bet)
 {
 	int result = bet;
 
-	if (winner == 1) { result*2;  }
-	if (winner == 2) { result*5;  }
-	if (winner == 3) { result*10; }
-	if (winner == 4) { result*15; }
-	if (winner == 5) { result*50; }
-	if (winner == 6) { result*20; }
-	if (winner == 7) { result*10; }
-	if (winner == 8) { result*5;  }
-	if (winner == 9) { result*3;  }
+	if (winner == 1) { result= (result*2);  }
+	if (winner == 2) { result= (result*5);  }
+	if (winner == 3) { result= (result*10); }
+	if (winner == 4) { result= (result*15); }
+	if (winner == 5) { result= (result*50); }
+	if (winner == 6) { result= (result*20); }
+	if (winner == 7) { result= (result*10); }
+	if (winner == 8) { result= (result*5);  }
+	if (winner == 9) { result= (result*3);  }
 
 	return result;
 }
