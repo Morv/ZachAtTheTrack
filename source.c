@@ -32,6 +32,7 @@ Purpose: Assignment 4: Zach At The Track
 	int horseWin(int randomNum);
 	double payout(int winner, double bet);
 	void results(int winner, int standings[]);
+	void showResults(int standings[]);
 
 // MAIN FUNCTION
 main () {
@@ -74,15 +75,18 @@ main () {
 			case 3:  // Account Options
 				accountOptions(&account);
 				break;
+			case 4: //View Standings
+					showResults(standings);
+				break;
 		}//end switch statement
-	} while (userChoice != 4); // end do-while loop
+	} while (userChoice != 5); // end do-while loop
 }//end of main
 int getUserChoice(){
 	int userChoice = 0;
 	drawMenu();
 	scanf_s("%i", &userChoice);
 	flush;
-	userChoice = verifyChoice(userChoice, 4);//verifies choice between 1 and 4
+	userChoice = verifyChoice(userChoice, 5);//verifies choice between 1 and 5
 
 	cls;
 	return userChoice;
@@ -92,9 +96,9 @@ void drawMenu(){
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	printf("Zach goes to the Track\n");
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	printf("1. Choose your horse\n2. Race\n3. Account options\n4. Quit\n");
+	printf("1. Choose your horse\n2. Race\n3. Account options\n4. View Standings\n5. Quit\n");
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
-	printf("Enter your choice (1-4):");
+	printf("Enter your choice (1-5):");
 }//end drawMenu
 int verifyChoice(int userChoice, int maxChoice)
 {
@@ -327,3 +331,35 @@ void results (int winner, int standings[])
 
 	return;
 }//end results
+void showResults(int standings[])
+{
+	int race = 0, i=0, count=0;
+	
+	cls;
+
+	for (count = 0; count < SIZE; count++)
+	{
+		race += standings[count];
+	}//end of summing wins
+
+	if (race == 0) //check if a race has been run
+	{
+		printf("There are no races to show...\n"); 
+	} else	{
+		printf("~~~~~~~~~~~~~~~~~~~~~~~\n");
+		printf("  CURRENT STANDINGS\n");
+		printf("~~~~~~~~~~~~~~~~~~~~~~~\n");
+		printf("  Name\t\tWins\n");
+		printf("_______\t\t____\n");
+
+		for (i; i<SIZE ;i++)
+		{
+			printf("Horse %i\t\t %i\n", i+1, standings[i]);
+		}//end for loop (display horses and wins)
+		
+		printf("~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+	}//end of displaying stats
+
+	pause;
+	return;
+}//end VIEW results
