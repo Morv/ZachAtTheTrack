@@ -15,26 +15,27 @@ Purpose: Assignment 4: Zach At The Track
 #define pause system ("pause")
 #define cls system ("cls")
 #define flush fflush (stdin)
+#define SIZE 9 //number of horses to choose from
 
 
 // FUNCTION PROTOTYPES
-int getUserChoice(); //returns 1-4
-void drawMenu();
-int verifyChoice(int userChoice, int maxChoice);//for a 4 option menu, enter 4 to verify that user's choice is between 1 and 4.
-int getHorse(); //returns horse number 1-9
-void horseMenu();
-void accountOptions(int *account);
-void accountMenu(int balance);
-int eligibility(int horse, int acct);
-int placeBet(int *account);
-int randomNum();
-int horseWin(int randomNum);
-
-int payout(int winner, int bet);
+	int getUserChoice(); //returns 1-4
+	void drawMenu();
+	int verifyChoice(int userChoice, int maxChoice);//for a 4 option menu, enter 4 to verify that user's choice is between 1 and 4.
+	int getHorse(); //returns horse number 1-SIZE (9)
+	void horseMenu();
+	void accountOptions(int *account);
+	void accountMenu(int balance);
+	int eligibility(int horse, int acct);
+	int placeBet(int *account);
+	int randomNum();
+	int horseWin(int randomNum);
+	int payout(int winner, int bet);
+	void results(int winner, int standings[]);
 
 // MAIN FUNCTION
 main () {
-	int userChoice = 0, myHorse = 0, account = 0, winner = 0, bet = 0;
+	int userChoice = 0, myHorse = 0, account = 0, winner = 0, bet = 0, standings[SIZE]={0};
 
 	do{ 
 		userChoice= getUserChoice();
@@ -44,8 +45,9 @@ main () {
 				myHorse = getHorse();
 				break;
 			case 2: // Race
-				 if (eligibility(myHorse, account) == 0) //checks for a horse chosen and money.
+				if (eligibility(myHorse, account) == 0) //checks for a horse chosen and money.
 					{ break; }
+				
 				bet = placeBet(&account);
 				winner = horseWin(randomNum()); //finds a winning horse.
 		
@@ -59,12 +61,8 @@ main () {
 					printf("Horse %i won the race you lost %i dollars.\n", winner, bet);
 					pause;
 				}
-					//results(winner)
-					/*
-					create an array for 9 horses.
-					for the winner input (1-9) add +1 to the value.
-					output the array showing horse number and number of wins.
-					*/
+					results(winner, standings);
+					
 				break;
 			case 3:  // Account Options
 				accountOptions(&account);
@@ -108,7 +106,7 @@ int getHorse()
 
 	horseMenu();
 		scanf_s("%i", &userChoice);
-	userChoice = verifyChoice(userChoice, 9);
+	userChoice = verifyChoice(userChoice, SIZE);
 	
 	flush;
 	cls;
@@ -149,22 +147,25 @@ void accountOptions(int* account)
 
 		switch(acctChoice){
 		case 1:
-			printf("How much do you want to add? $");
-				scanf_s("%i", &amount);
-			*account = (*account + amount);
-			printf("\nNew account balance: %i\n", *account);
+				printf("How much do you want to add? $");
+					scanf_s("%i", &amount);
+
+				*account = (*account + amount);
+
+				printf("\nNew account balance: %i\n", *account);
+
 			break;
 		case 2:
-			printf("How much do you want to withdraw? $");
-				scanf_s("%i", &amount);
+				printf("How much do you want to withdraw? $");
+					scanf_s("%i", &amount);
 
-			if (amount >= *account){
-				printf("\nCashing out: $%i", *account);
-				*account = 0;
-			} else {
-				printf("\nCashing out: $%i", amount);
-				*account =( *account - amount);
-			}//end if-else statement
+				if (amount >= *account){
+					printf("\nCashing out: $%i", *account);
+					*account = 0;
+				} else {
+					printf("\nCashing out: $%i", amount);
+					*account =( *account - amount);
+				}//end if-else statement
 
 			break;
 		};//end switch
@@ -280,15 +281,36 @@ int payout (int winner, int bet)
 {
 	int result = bet;
 
-	if (winner == 1) { result= (result*2);  }
-	if (winner == 2) { result= (result*5);  }
-	if (winner == 3) { result= (result*10); }
-	if (winner == 4) { result= (result*15); }
-	if (winner == 5) { result= (result*50); }
-	if (winner == 6) { result= (result*20); }
-	if (winner == 7) { result= (result*10); }
-	if (winner == 8) { result= (result*5);  }
-	if (winner == 9) { result= (result*3);  }
+	if (winner == 1) { result = (result*2);  }
+	if (winner == 2) { result = (result*5);  }
+	if (winner == 3) { result = (result*10); }
+	if (winner == 4) { result = (result*15); }
+	if (winner == 5) { result = (result*50); }
+	if (winner == 6) { result = (result*20); }
+	if (winner == 7) { result = (result*10); }
+	if (winner == 8) { result = (result*5);  }
+	if (winner == 9) { result = (result*3);  }
 
 	return result;
+}
+void results (int winner, int standings[])
+{
+	int i=0;
+	
+	standings[winner-1]++;
+
+	cls;
+	printf("~~~~~~~~~~~~~~~~~~~~~~~\n");
+	printf("  CURRENT STANDINGS\n");
+	printf("~~~~~~~~~~~~~~~~~~~~~~~\n");
+	printf("  Name\t\tWins\n");
+	printf("_______\t\t____\n");
+
+		for (i; i<SIZE ;i++)
+		{
+			printf("Horse %i\t\t %i\n", i+1, standings[i]);
+		}
+		printf("~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+		pause;
+	return;
 }
