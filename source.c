@@ -1,6 +1,6 @@
 /****************************************************
 Written by: Josh, Justin, Kyle, Morvan
-Date Written: September 12, 2013
+Date Written: September 17, 2013
 Purpose: Assignment 4: Zach At The Track
 
 1. add/remove money from account
@@ -24,18 +24,19 @@ Purpose: Assignment 4: Zach At The Track
 	int verifyChoice(int userChoice, int maxChoice);//for a 4 option menu, enter 4 to verify that user's choice is between 1 and 4.
 	int getHorse(); //returns horse number 1-SIZE (9)
 	void horseMenu();
-	void accountOptions(int *account);
-	void accountMenu(int balance);
-	int eligibility(int horse, int acct);
-	int placeBet(int *account);
+	void accountOptions(double *account);
+	void accountMenu(double balance);
+	int eligibility(int horse, double acct);
+	double placeBet(double *account);
 	int randomNum();
 	int horseWin(int randomNum);
-	int payout(int winner, int bet);
+	double payout(int winner, double bet);
 	void results(int winner, int standings[]);
 
 // MAIN FUNCTION
 main () {
-	int userChoice = 0, myHorse = 0, account = 0, winner = 0, bet = 0, standings[SIZE]={0};
+	int userChoice = 0, myHorse = 0, winner = 0, standings[SIZE]={0};
+	double account = 0, bet = 0;
 
 	do{ 
 		userChoice= getUserChoice();
@@ -44,26 +45,30 @@ main () {
 			case 1: //Choose your horse
 				myHorse = getHorse();
 				break;
+
 			case 2: // Race
 				if (eligibility(myHorse, account) == 0) //checks for a horse chosen and money.
 					{ break; }
 				
 				bet = placeBet(&account);
+					if (bet == 0){break;} //no bet was placed, return to menu without running the race.
+
 				winner = horseWin(randomNum()); //finds a winning horse.
 		
 				cls;
 				if (myHorse == winner)
 				{
 					account = (account + payout(winner, bet));
-					printf("Congratulations your horse, Horse %i won...you have just won $%i dollars.\n", winner, payout(winner, bet));
+					printf("Congratulations your horse, Horse %i won...you have just won $%.2lf dollars.\n", winner, payout(winner, bet));
 					pause;
 				} else {
-					printf("Horse %i won the race you lost %i dollars.\n", winner, bet);
+					printf("Horse %i won the race you lost %.2lf dollars.\n", winner, bet);
 					pause;
-				}
+				} //end if-else statement
+
 					results(winner, standings);
-					
 				break;
+
 			case 3:  // Account Options
 				accountOptions(&account);
 				break;
@@ -83,7 +88,8 @@ int getUserChoice(){
 void drawMenu(){
 	cls;
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	printf("Welcome to Zack's Track\n");
+	printf("Zach goes to the Track\n");
+	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	printf("1. Choose your horse\n2. Race\n3. Account options\n4. Quit\n");
 	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
 	printf("Enter your choice (1-4):");
@@ -132,38 +138,41 @@ void horseMenu()
 	printf("~~~~~~~~~~~~~~~~~~\n\n");
 	printf("Enter your choice (1-9):");
 }
-void accountOptions(int* account)
+void accountOptions(double* account)
 {
-	int acctChoice = 0, amount=0, acct= *account;
+	int acctChoice = 0;
+	double amount = 0, acct = *account;
 	do{
 		acct = *account;
 		accountMenu(acct);
 			scanf_s("%i", &acctChoice);
 			flush;
+
 		acctChoice = verifyChoice(acctChoice, 3);		
 		
 		cls;
-		printf("Current Balance: %i\n", *account); 
+		printf("Current Balance: %.2lf\n", *account); 
 
 		switch(acctChoice){
 		case 1:
 				printf("How much do you want to add? $");
-					scanf_s("%i", &amount);
+					scanf_s("%lf", &amount);
 
 				*account = (*account + amount);
 
-				printf("\nNew account balance: %i\n", *account);
+				printf("\nNew account balance: %.2lf\n", *account);
 
 			break;
+
 		case 2:
 				printf("How much do you want to withdraw? $");
-					scanf_s("%i", &amount);
+					scanf_s("%lf", &amount);
 
 				if (amount >= *account){
-					printf("\nCashing out: $%i", *account);
+					printf("\nCashing out: $%.2lf", *account);
 					*account = 0;
 				} else {
-					printf("\nCashing out: $%i", amount);
+					printf("\nCashing out: $%.2lf", amount);
 					*account =( *account - amount);
 				}//end if-else statement
 
@@ -171,31 +180,31 @@ void accountOptions(int* account)
 		};//end switch
 	}while (acctChoice != 3);//end do-while
 } // end account options
-void accountMenu(int balance)
+void accountMenu(double balance)
 {
 	cls;
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	printf("ACCOUNT MENU\n");
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n");
-	printf("Current Balance: %i\n", balance);
-	printf("~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	printf("\tACCOUNT MENU\n");
+	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	printf("Current Balance: $%.2lf\n", balance);
+	printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	printf("1. Add Money\n");
 	printf("2. Cash Out\n");
 	printf("3. Main Menu\n\n");
 	printf("Choice (1-3):");
 } // end account menu
-int placeBet(int* account)
+double placeBet(double* account)
 {
-	int bet = 0;
+	double bet = 0;
 	
 	cls;
 	printf("Place your bet: $");
-		scanf_s("%i", &bet);
+		scanf_s("%lf", &bet);
 	
 		while (bet > *account)
 		{
-			printf("\nBet cannot exceed $%i.\n Place your bet: $", *account);
-			scanf_s("%i", &bet);
+			printf("\nBet cannot exceed $%.2lf.\n Place your bet: $", *account);
+			scanf_s("%lf", &bet);
 		}
 		if (bet == 0)
 		{
@@ -208,7 +217,7 @@ int placeBet(int* account)
 
 	return bet;
 }
-int eligibility(int horse, int acct)
+int eligibility(int horse, double acct)
 {
 	if (horse == 0 || acct == 0)
 	{
@@ -277,9 +286,9 @@ int horseWin(int randomNum)//matches the random number with the corresponding ho
 	}
 	return winningHorse;
 }
-int payout (int winner, int bet)
+double payout (int winner, double bet)
 {
-	int result = bet;
+	double result = bet;
 
 	if (winner == 1) { result = (result*2);  }
 	if (winner == 2) { result = (result*5);  }
