@@ -46,7 +46,7 @@ main () {
 			case 1: //Choose your horse
 				myHorse = getHorse();
 				break;
-
+dd
 			case 2: // Race
 				if (eligibility(myHorse, account) == 0) //checks for a horse chosen and money.
 					{ break; }
